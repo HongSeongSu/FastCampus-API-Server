@@ -14,15 +14,24 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 import json
 import os
+import sys
 
-from pathlib import Path
-
-DEBUG = True
+DEBUG = (len(sys.argv) > 1 and sys.argv[1] == 'runserver') or os.environ.get('IS_DEBUG') == 'True'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_PATH = os.path.dirname(BASE_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-config = json.loads(Path(__file__).parents[2].joinpath('.conf', 'settings_local.json').open().read())
+CONF_PATH = os.path.join(ROOT_PATH, '.conf')
+if DEBUG:
+    CONFIG_FILE = os.path.join(CONF_PATH, 'settings_local.json')
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    CONFIG_FILE = os.path.join(CONF_PATH, 'settings_deploy.json')
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+config = json.loads(open(CONFIG_FILE).read())
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -31,9 +40,6 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 MEDIA_URL = '/media/'
-if DEBUG:
-    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 INSTALLED_APPS = [
@@ -81,6 +87,13 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

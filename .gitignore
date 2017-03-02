@@ -1,6 +1,8 @@
 # Custom
 .idea/
 .conf/
+_Dockerfile*
+static_root/
 
 # Created by https://www.gitignore.io/api/python,django,pycharm
 
@@ -155,3 +157,8 @@ ENV/
 .ropeproject
 
 # End of https://www.gitignore.io/api/python,django,pycharm
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
