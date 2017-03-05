@@ -1,0 +1,17 @@
+[Unit]
+Description=uWSGI Emperor service
+After=syslog.target
+
+
+[Service]
+ExecStartPre=/bin/bash -c 'mkdir -p /run/uwsgi;'
+ExecStart=uwsgi --master --emperor /etc/uwsgi/sites --logto /var/log/uwsgi/uwsgi.log
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+
+[Install]
+WantedBy=multi-user.target
