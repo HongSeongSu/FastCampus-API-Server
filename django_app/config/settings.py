@@ -30,8 +30,6 @@ if DEBUG:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_local.json')
 else:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_deploy.json')
-    # STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
-    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
