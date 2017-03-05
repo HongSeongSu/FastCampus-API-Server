@@ -23,6 +23,7 @@ ROOT_PATH = os.path.dirname(BASE_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 CONF_PATH = os.path.join(ROOT_PATH, '.conf')
+CONFIG_FILE_COMMON = os.path.join(CONF_PATH, 'settings_common.json')
 if DEBUG:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_local.json')
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
@@ -31,7 +32,15 @@ else:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_deploy.json')
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
+
+# common과 현재 사용설정 (local또는 deploy)를 합쳐줌
+for key, key_dict in config_common.items():
+    if not config.get(key):
+        config[key] = {}
+    for inner_key, inner_key_dict in key_dict.items():
+        config[key][inner_key] = inner_key_dict
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
