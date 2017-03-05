@@ -16,7 +16,9 @@ import json
 import os
 import sys
 
-DEBUG = (len(sys.argv) > 1 and sys.argv[1] == 'runserver') or os.environ.get('IS_DEBUG') == 'True'
+DEBUG = (len(sys.argv) > 1 and sys.argv[1] == 'runserver') \
+        or os.environ.get('MODE') == 'DEBUG'
+USE_STORAGE_S3 = DEBUG is False or os.environ.get('STORAGE') == 'S3'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_PATH = os.path.dirname(BASE_DIR)
@@ -26,12 +28,10 @@ CONF_PATH = os.path.join(ROOT_PATH, '.conf')
 CONFIG_FILE_COMMON = os.path.join(CONF_PATH, 'settings_common.json')
 if DEBUG:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_local.json')
-    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 else:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_deploy.json')
-    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    # STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
+    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 config_common = json.loads(open(CONFIG_FILE_COMMON).read())
 config = json.loads(open(CONFIG_FILE).read())
 
@@ -42,13 +42,31 @@ for key, key_dict in config_common.items():
     for inner_key, inner_key_dict in key_dict.items():
         config[key][inner_key] = inner_key_dict
 
+# AWS
+AWS_STORAGE_BUCKET_NAME = config['aws']['bucket_name']
+AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
+AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-MEDIA_URL = '/media/'
+if USE_STORAGE_S3:
+    # django-storages
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'config.storages.StaticStorage'
+    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    MEDIAFILES_LOCATION = 'media'
+    DEFAULT_STORAGE = 'config.storages.MediaStorage'
+    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+else:
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 INSTALLED_APPS = [
@@ -58,6 +76,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_extensions',
 
     'member',
 ]
