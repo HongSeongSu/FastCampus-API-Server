@@ -14,6 +14,7 @@ docopt==0.6.2
 docutils==0.13.1
 jmespath==0.9.1
 pathspec==0.5.0
+psycopg2==2.7
 python-dateutil==2.6.0
 PyYAML==3.12
 requests==2.9.1

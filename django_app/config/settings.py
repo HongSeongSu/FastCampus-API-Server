@@ -118,21 +118,16 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': config['db']['engine'],
+        'NAME': config['db']['name'],
+        'USER': config['db']['user'],
+        'PASSWORD': config['db']['password'],
+        'HOST': config['db']['host'],
+        'PORT': config['db']['port']
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-
+}
 # Auth
 AUTH_USER_MODEL = 'member.MyUser'
 
