@@ -20,7 +20,6 @@ COPY        .conf/supervisor-app.conf /etc/supervisor/conf.d/
 RUN         ln -s /etc/nginx/sites-available/api-ios /etc/nginx/sites-enabled/api-ios
 
 WORKDIR     /srv/app/django_app
-RUN         python3 manage.py collectstatic --noinput
 
 EXPOSE      4567
 CMD ["supervisord", "-n"]
