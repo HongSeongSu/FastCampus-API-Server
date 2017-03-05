@@ -3,6 +3,7 @@
 .conf-secret/
 _Dockerfile*
 static_root/
+secrets.tar
 
 # Created by https://www.gitignore.io/api/python,django,pycharm
 

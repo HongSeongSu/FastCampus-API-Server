@@ -26,7 +26,9 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 CONF_PATH = os.path.join(ROOT_PATH, '.conf-secret')
 CONFIG_FILE_COMMON = os.path.join(CONF_PATH, 'settings_common.json')
-if DEBUG:
+if 'TRAVIS' in os.environ:
+    CONFIG_FILE = os.path.join(CONF_PATH, 'settings_travis.json')
+elif DEBUG:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_local.json')
 else:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_deploy.json')
@@ -60,11 +62,17 @@ if USE_STORAGE_S3:
     # django-storages
     STATICFILES_LOCATION = 'static'
     STATICFILES_STORAGE = 'config.storages.StaticStorage'
-    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    STATIC_URL = 'https://{}/{}/'.format(
+        AWS_S3_CUSTOM_DOMAIN,
+        STATICFILES_LOCATION
+    )
 
     MEDIAFILES_LOCATION = 'media'
     DEFAULT_STORAGE = 'config.storages.MediaStorage'
-    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    MEDIA_URL = 'https://{}/{}/'.format(
+        AWS_S3_CUSTOM_DOMAIN,
+        MEDIAFILES_LOCATION
+    )
 else:
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
