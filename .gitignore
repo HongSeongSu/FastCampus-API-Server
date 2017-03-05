@@ -1,6 +1,6 @@
 # Custom
 .idea/
-.conf/
+.conf-secret/
 _Dockerfile*
 static_root/
 

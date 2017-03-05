@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_PATH = os.path.dirname(BASE_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-CONF_PATH = os.path.join(ROOT_PATH, '.conf')
+CONF_PATH = os.path.join(ROOT_PATH, '.conf-secret')
 CONFIG_FILE_COMMON = os.path.join(CONF_PATH, 'settings_common.json')
 if DEBUG:
     CONFIG_FILE = os.path.join(CONF_PATH, 'settings_local.json')
