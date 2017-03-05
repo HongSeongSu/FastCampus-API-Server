@@ -41,10 +41,15 @@ for key, key_dict in config_common.items():
         config[key][inner_key] = inner_key_dict
 
 # AWS
-AWS_STORAGE_BUCKET_NAME = config['aws']['bucket_name']
 AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
 AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
+AWS_QUERYSTRING_AUTH = False
+
+AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
+AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
+AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
 AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_FILE_OVERWRITE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
