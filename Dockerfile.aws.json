@@ -4,7 +4,7 @@
     {
       "name": "fc-api-ios",
       "host": {
-        "sourcePath": "var/app/current/django_app"
+        "sourcePath": "/var/app/current/django_app"
       }
     }
   ],
