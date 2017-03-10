@@ -1,6 +1,7 @@
 # Custom
 .idea/
-.conf-secret/
+.conf-secret/*
+!.conf-secret/.gitkeep
 _Dockerfile*
 static_root/
 secrets.tar
