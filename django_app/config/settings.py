@@ -79,6 +79,21 @@ else:
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+# django-rest-framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+# django-rest-auth
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'member.serializers.UserSerializer',
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'member.serializers.SignupSerializer',
+}
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -87,8 +102,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'django_extensions',
+    'allauth',
+    'allauth.account',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
 
     'member',
 ]
