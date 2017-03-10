@@ -43,15 +43,16 @@ for key, key_dict in config_common.items():
         config[key][inner_key] = inner_key_dict
 
 # AWS
-AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
-AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
-AWS_QUERYSTRING_AUTH = False
+if USE_STORAGE_S3:
+    AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
+    AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
+    AWS_QUERYSTRING_AUTH = False
 
-AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
-AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
-AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
-AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
-AWS_S3_FILE_OVERWRITE = True
+    AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
+    AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
+    AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
+    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+    AWS_S3_FILE_OVERWRITE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -85,6 +86,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 # django-rest-auth
 REST_AUTH_SERIALIZERS = {
