@@ -113,6 +113,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 
     'member',
+    'post',
 ]
 
 MIDDLEWARE = [
