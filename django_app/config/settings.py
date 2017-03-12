@@ -88,6 +88,11 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
+if not DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
+        'rest_framework.renderers.JSONRenderer',
+    )
+
 # django-rest-auth
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'member.serializers.UserSerializer',

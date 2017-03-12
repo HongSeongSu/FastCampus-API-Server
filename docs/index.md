@@ -3,6 +3,10 @@
 > 굵은 글씨로 표시된 `Key`는 필수값  
 > 사용자 인증은 Token Authorization을 사용하며, Header의 `Authorization`key에 `Token [Token key value]`value를 추가하여 이용한다.
 
+## Repository
+
+<https://github.com/LeeHanYeong/FastCampus-iOS-API-Server>
+
 ## API Base
 
 `https://fc-ios.lhy.kr/api`
@@ -10,15 +14,16 @@
 ## API 목록
 
 - Member
-	- Signup
-	- Login
-	- Logout
-	- UserDetail
+	- [Signup](#signup)
+	- [Login](#login)
+	- [Logout](#logout)
+	- [UserDetail](#user-detail)
 - Post
-	- Post Create
-	- Post List
-	- Post Retrieve
+	- [Post Create](#post-create)
+	- [Post List](#post-list)
+	- [Post Retrieve](#post-retrive)
 
+<a name="signup"></a>
 ## Signup
 
 ### URL
@@ -93,7 +98,7 @@ Token key value
 }
 ```
 
-
+<a name="login"></a>
 ## Login
 
 ### URL
@@ -139,5 +144,310 @@ Token key value
   "non_field_errors": [
     "제공된 인증데이터(credentials)로는 로그인할 수 없습니다."
   ]
+}
+```
+
+<a name="logout"></a>
+## Logout
+
+> Authenticate required
+
+### URL
+
+`/member/logout/`
+
+### Method
+
+`POST`
+
+### Header
+
+Key|Value
+---|---
+Authorization|Token [Token key value]
+
+### URL Params
+
+None
+
+### Data Params
+
+None
+
+### Success Response
+
+- Code: 200
+- Content
+
+```json
+{
+  "detail": "Successfully logged out."
+}
+```
+
+### Error Response
+
+- Code: 401
+	- Reason: Invalid token
+	- Content
+
+```json
+{
+  "detail": "토큰이 유효하지 않습니다."
+}
+```
+
+<a name="user-detail"></a>
+## UserDetail(Profile)
+
+> Authenticate required
+
+### URL
+
+`/member/profile/`
+
+### Method
+
+`GET`
+
+### Header
+
+Key|Value
+---|---
+Authorization|Token [Token key value]
+
+### URL Params
+
+None
+
+### Data Params
+
+None
+
+### Success Response
+
+- Code: 200
+- Content
+
+Token key value
+
+```json
+{
+  "key": "a35b9eb7e90d9ecdb5567183fb13f6b813cf2547"
+}
+```
+
+### Error Response
+
+- Code: 401
+	- Reason: Invalid token
+	- Content
+
+```json
+{
+  "detail": "토큰이 유효하지 않습니다."
+}
+```
+
+
+
+<a name="post-create"></a>
+## Post Create
+
+> Authenticate required
+
+### URL
+
+`/post/`
+
+### Method
+
+`POST`
+
+### Header
+
+Key|Value
+---|---
+Authorization|Token [Token key value]
+
+### URL Params
+
+None
+
+### Data Params
+
+Key|Value
+---|---
+**title**|글 제목
+content|글 내용
+img_cover|이미지
+
+### Success Response
+
+- Code: 201
+- Content
+
+```json
+{
+  "pk": 23,
+  "author": {
+    "pk": 78,
+    "username": "lhy18",
+    "first_name": "HanYeong",
+    "last_name": "Lee",
+    "email": ""
+  },
+  "title": "Post with Image",
+  "img_cover": "http://127.0.0.1:8000/media/post/120_qaXrLMD.png",
+  "content": "Post Content"
+}```
+
+### Error Response
+
+- Code: 400
+	- Reason: 필수 항목 누락
+	- Content
+
+```json
+{
+  "title": [
+    "이 항목을 채워주십시오."
+  ]
+}
+```
+
+
+<a name="post-list"></a>
+## Post List
+
+### URL
+
+`/post/`
+
+### Method
+
+`GET`
+
+### Header
+
+None
+
+### URL Params
+
+Key|Value
+---|---
+page|Pagination Number
+
+### Data Params
+
+None
+
+### Success Response
+
+- Code: 200
+- Content
+
+```json
+{
+  "count": 22,
+  "next": "http://127.0.0.1:8000/api/post/?page=2",
+  "previous": null,
+  "results": [
+    {
+      "pk": 23,
+      "author": {
+        "pk": 78,
+        "username": "lhy18",
+        "first_name": "HanYeong",
+        "last_name": "Lee",
+        "email": ""
+      },
+      "title": "Post with Image",
+      "img_cover": "http://127.0.0.1:8000/media/post/120_qaXrLMD.png",
+      "content": "Post Content"
+    },
+    {
+      "pk": 22,
+      "author": {
+        "pk": 78,
+        "username": "lhy18",
+        "first_name": "HanYeong",
+        "last_name": "Lee",
+        "email": ""
+      },
+      "title": "Post Title",
+      "img_cover": null,
+      "content": "asdf"
+    },
+  ]
+}
+```
+
+### Error Response
+
+- Code: 404
+	- Reason: Invalid page number
+	- Content
+
+```json
+{
+  "detail": "Invalid page."
+}
+```
+
+
+<a name="post-retrieve"></a>
+## Post Retrieve
+
+### URL
+
+`/post/<post_pk>/`
+
+### Method
+
+`GET`
+
+### Header
+
+None
+
+### URL Params
+
+None
+
+### Data Params
+
+None
+
+### Success Response
+
+- Code: 200
+- Content
+
+```json
+{
+  "pk": 21,
+  "author": {
+    "pk": 78,
+    "username": "lhy18",
+    "first_name": "HanYeong",
+    "last_name": "Lee",
+    "email": ""
+  },
+  "title": "Post Title",
+  "img_cover": null,
+  "content": ""
+}
+```
+
+### Error Response
+
+- Code: 404
+	- Reason: Invalid Post pk
+	- Content
+
+```json
+{
+  "detail": "찾을 수 없습니다."
 }
 ```
