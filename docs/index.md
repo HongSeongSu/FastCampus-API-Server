@@ -45,8 +45,8 @@ Key|Description|Type
 **username**|회원가입하는 사용자명|String
 **password1**|패스워드|String
 **password2**|패스워드 확인|String
-**first_name**|이름|String
-**last_name**|성|String
+first_name|이름|String
+last_name|성|String
 email|이메일|String
 
 ### Success Response

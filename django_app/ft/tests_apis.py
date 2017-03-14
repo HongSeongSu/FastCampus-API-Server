@@ -11,20 +11,28 @@ class MemberTest(APILiveServerTestCase):
     test_first_name = 'test_first_name'
     test_last_name = 'test_last_name'
 
-    def signup_and_return_response(self):
+    def signup_and_return_response(self, extra_data=None):
         url = reverse('rest_signup')
         data = {
             'username': self.test_username,
             'password1': self.test_password,
             'password2': self.test_password,
-            'first_name': self.test_first_name,
-            'last_name': self.test_last_name,
         }
+        if extra_data and isinstance(extra_data, dict):
+            data.update(extra_data)
         response = self.client.post(url, data)
         return response
 
-    def test_signup(self):
+    def test_signup_without_name(self):
         response = self.signup_and_return_response()
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIn('key', response.data)
+        self.assertEqual(MyUser.objects.count(), 1)
+        self.assertEqual(MyUser.objects.get().username, self.test_username)
+
+    def test_signup(self):
+        response = self.signup_and_return_response(
+            {'first_name': self.test_first_name, 'last_name': self.test_last_name})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn('key', response.data)
         self.assertEqual(MyUser.objects.count(), 1)
@@ -42,7 +50,8 @@ class MemberTest(APILiveServerTestCase):
         self.assertIn('key', response.data)
 
     def test_user_detail(self):
-        response = self.signup_and_return_response()
+        response = self.signup_and_return_response(
+            {'first_name': self.test_first_name, 'last_name': self.test_last_name})
         token = response.data['key']
         url = reverse('rest_profile')
         self.client.credentials(HTTP_AUTHORIZATION='Token {}'.format(token))

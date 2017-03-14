@@ -27,12 +27,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class SignupSerializer(RegisterSerializer):
-    first_name = serializers.CharField(max_length=30, required=True)
-    last_name = serializers.CharField(max_length=30, required=True)
+    first_name = serializers.CharField(max_length=30, required=False)
+    last_name = serializers.CharField(max_length=30, required=False)
 
     def get_cleaned_data(self):
         ret = super().get_cleaned_data()
-        ret['first_name'] = self.validated_data['first_name']
-        ret['last_name'] = self.validated_data['last_name']
+        ret['first_name'] = self.validated_data.get('first_name', '')
+        ret['last_name'] = self.validated_data.get('last_name', '')
         ret['email'] = self.validated_data.get('email', '')
         return ret
