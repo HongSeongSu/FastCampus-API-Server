@@ -42,24 +42,22 @@ for key, key_dict in config_common.items():
     for inner_key, inner_key_dict in key_dict.items():
         config[key][inner_key] = inner_key_dict
 
-# AWS
-if USE_STORAGE_S3:
-    AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
-    AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
-    AWS_QUERYSTRING_AUTH = False
-
-    AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
-    AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
-    AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
-    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
-    AWS_S3_FILE_OVERWRITE = True
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
+# AWS
 if USE_STORAGE_S3:
+    AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
+    AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
+
+    AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
+    AWS_S3_SIGNATURE_VERSION = config['aws']['s3_signature_version']
+    AWS_S3_HOST = 's3.{}.amazonaws.com'.format(config['aws']['s3_region'])
+    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
     # django-storages
     STATICFILES_LOCATION = 'static'
     STATICFILES_STORAGE = 'config.storages.StaticStorage'
@@ -69,7 +67,7 @@ if USE_STORAGE_S3:
     )
 
     MEDIAFILES_LOCATION = 'media'
-    DEFAULT_STORAGE = 'config.storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'config.storages.MediaStorage'
     MEDIA_URL = 'https://{}/{}/'.format(
         AWS_S3_CUSTOM_DOMAIN,
         MEDIAFILES_LOCATION
