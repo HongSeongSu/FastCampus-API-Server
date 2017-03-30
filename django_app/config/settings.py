@@ -19,6 +19,7 @@ import sys
 DEBUG = (len(sys.argv) > 1 and sys.argv[1] == 'runserver') \
         or os.environ.get('MODE') == 'DEBUG'
 USE_STORAGE_S3 = DEBUG is False or os.environ.get('STORAGE') == 'S3'
+DB = os.environ.get('DB')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_PATH = os.path.dirname(BASE_DIR)
@@ -164,6 +165,13 @@ DATABASES = {
         'PORT': config['db']['port']
     }
 }
+if DB == 'LOCAL':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 # Auth
 AUTH_USER_MODEL = 'member.MyUser'
 
