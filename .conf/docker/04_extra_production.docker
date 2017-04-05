@@ -1,0 +1,2 @@
+EXPOSE      4567
+CMD ["supervisord", "-n"]

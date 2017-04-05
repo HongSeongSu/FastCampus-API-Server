@@ -1,5 +1,6 @@
 # Custom
-NuxtPractice/
+front/
+Dockerfile.*
 .idea/
 .conf-secret/*
 !.conf-secret/.gitkeep

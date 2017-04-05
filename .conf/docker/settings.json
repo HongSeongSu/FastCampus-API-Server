@@ -1,0 +1,10 @@
+{
+    "baseImageName": "api-ios-base",
+    "debugImageName": "api-ios-debug",
+    "dockerfileBaseName": "Dockerfile.base",
+    "dockerfileDebugName": "Dockerfile.debug",
+    "dockerfileProductionName": "Dockerfile",
+    "productionImageName": "api-ios",
+    "rootImageName": "ubuntu:16.04",
+    "dockerHubImageName": "azelf/fc-ios-api-server"
+}

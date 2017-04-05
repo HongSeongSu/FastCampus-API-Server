@@ -1,0 +1,6 @@
+FROM        {from}
+MAINTAINER  {maintainer}
+
+{base}
+{common}
+{extra}
