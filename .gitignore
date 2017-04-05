@@ -1,4 +1,5 @@
 # Custom
+NuxtPractice/
 .idea/
 .conf-secret/*
 !.conf-secret/.gitkeep

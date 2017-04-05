@@ -99,6 +99,7 @@ REST_AUTH_SERIALIZERS = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'member.serializers.SignupSerializer',
 }
+SITE_ID = 1
 
 # Application definition
 INSTALLED_APPS = [

@@ -13,3 +13,9 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('-pk',)
+
+
+class PostImage(models.Model):
+    post = models.ForeignKey(Post)
+    img = models.ImageField(upload_to='post')
+    created_date = models.DateTimeField(auto_now_add=True)
