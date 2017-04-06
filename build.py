@@ -219,5 +219,5 @@ else:
 build_command = build_command_template.format(**build_format_dict)
 
 print('Build command execute: {}'.format(build_command))
-# subprocess.run(build_command, shell=True)
+subprocess.run(build_command, shell=True)
 sys.exit('Dockerfile, DockerImage created')

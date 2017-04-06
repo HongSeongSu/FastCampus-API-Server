@@ -1,6 +1,4 @@
 COPY        . /srv/app
-WORKDIR     /srv/app
-RUN         git clone https://{github_username}:{github_password}@github.com/LeeHanYeong/NuxtPractice.git front
 WORKDIR     /srv/app/front
 RUN         npm install && \
             npm run build
