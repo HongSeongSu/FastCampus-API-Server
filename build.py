@@ -157,8 +157,10 @@ common_format_dict = {
     'github_password': config_secret_common['github']['password'],
 }
 dockerfile_template = open(os.path.join(CONF_DOCKER_DIR, '00_template.docker'), 'rt').read()
-dockerfile_base = open(os.path.join(CONF_DOCKER_DIR, '01_base.docker'), 'rt').read().format(**common_format_dict)
-dockerfile_common = open(os.path.join(CONF_DOCKER_DIR, '02_common.docker'), 'rt').read().format(**common_format_dict)
+dockerfile_base = open(os.path.join(CONF_DOCKER_DIR, '01_base.docker'), 'rt').read().format(
+    **common_format_dict)
+dockerfile_common = open(os.path.join(CONF_DOCKER_DIR, '02_common.docker'), 'rt').read().format(
+    **common_format_dict)
 dockerfile_extra_debug = open(os.path.join(CONF_DOCKER_DIR, '03_extra_debug.docker'), 'rt').read()
 dockerfile_extra_production = open(os.path.join(CONF_DOCKER_DIR, '04_extra_production.docker'),
                                    'rt').read()
@@ -179,10 +181,12 @@ elif args.mode == MODE_DEBUG:
     format_dict['extra'] = dockerfile_extra_debug
 elif args.mode == MODE_PRODUCTION:
     dockerfile_name = config['dockerfileProductionName']
+    format_dict['from'] = config['baseImageName']
+    format_dict['base'] = ''
     format_dict['extra'] = dockerfile_extra_production
 else:
-    format_dict['from'] = config['dockerHubImageName']
     dockerfile_name = config['dockerfileDockerHubName']
+    format_dict['from'] = config['dockerHubImageName']
     format_dict['base'] = ''
     format_dict['common'] = ''
     format_dict['extra'] = dockerfile_extra_production
