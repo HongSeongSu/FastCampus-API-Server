@@ -181,16 +181,17 @@ elif args.mode == MODE_PRODUCTION:
     dockerfile_name = config['dockerfileProductionName']
     format_dict['extra'] = dockerfile_extra_production
 else:
-    dockerfile_name = config['dockerfileProductionName']
     format_dict['from'] = config['dockerHubImageName']
+    dockerfile_name = config['dockerfileDockerHubName']
     format_dict['base'] = ''
     format_dict['common'] = ''
     format_dict['extra'] = dockerfile_extra_production
 dockerfile = dockerfile_template.format(**format_dict)
 while True:
     do_continue = input(
-        '{}\n\nDockerfile will be created as above. Do you proceed like this? [Y/n]: '.format(
-            dockerfile))
+        '{}\n\nDockerfile(Filename: {}) will be created as above. Do you proceed like this? [Y/n]: '.format(
+            dockerfile,
+            dockerfile_name))
     if do_continue == '' or do_continue.lower() == 'y':
         break
     elif do_continue.lower() == 'n':
@@ -211,10 +212,12 @@ if args.mode == MODE_BASE:
     build_format_dict['name'] = config['baseImageName']
 elif args.mode == MODE_DEBUG:
     build_format_dict['name'] = config['debugImageName']
+elif args.mode == MODE_PRODUCTION:
+    build_format_dict['name'] = config['dockerHubImageName']
 else:
-    build_format_dict['name'] = config['productionImageName']
+    sys.exit('DockerHub mode does not build image')
 build_command = build_command_template.format(**build_format_dict)
 
 print('Build command execute: {}'.format(build_command))
-subprocess.run(build_command, shell=True)
+# subprocess.run(build_command, shell=True)
 sys.exit('Dockerfile, DockerImage created')
