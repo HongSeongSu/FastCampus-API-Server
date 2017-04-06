@@ -18,12 +18,14 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from . import apis
+from .. import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^api/', include(apis)),
+    url(r'^$', views.index, name='index'),
 ]
 if settings.DEBUG:
     urlpatterns += static(
