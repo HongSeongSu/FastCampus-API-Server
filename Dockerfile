@@ -12,8 +12,9 @@ COPY        .conf/nginx-app.conf /etc/nginx/sites-available/api-ios
 
 COPY        .conf/supervisord.conf /etc/supervisor/
 COPY        .conf/supervisor-app.conf /etc/supervisor/conf.d/
+RUN         rm -f /etc/nginx/sites-enabled/*
 RUN         ln -s /etc/nginx/sites-available/api-ios /etc/nginx/sites-enabled/api-ios
-RUN         mkdir /var/log/celery
+RUN         mkdir -p /var/log/celery
 
 WORKDIR     /srv/app/django_app
 EXPOSE      4567

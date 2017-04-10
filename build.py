@@ -245,9 +245,11 @@ elif args.mode == MODE_BASE_NPM:
 elif args.mode == MODE_DEBUG:
     build_format_dict['name'] = config['imageNameDebug']
 elif args.mode == MODE_PRODUCTION:
+    build_format_dict['name'] = config['imageNameProduction']
+elif args.mode == MODE_DOCKERHUB:
     build_format_dict['name'] = config['imageNameDockerHub']
 else:
-    sys.exit('DockerHub mode does not build image')
+    sys.exit('Build mode is not valid')
 build_command = build_command_template.format(**build_format_dict)
 
 print('Build command execute: {}'.format(build_command))
