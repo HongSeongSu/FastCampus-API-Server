@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^api/', include(apis)),
     url(r'^$', views.index, name='index'),
+    url(r'^celery-test/$', views.celery_test, name='celery-test'),
 ]
 if settings.DEBUG:
     urlpatterns += static(
