@@ -49,6 +49,19 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
+# Celery
+CELERY_BROKER_TRANSPORT = 'sqs'
+CELERY_BROKER_URL = 'sqs://{aws_access_key_id}:{aws_secret_access_key}@'.format(
+    aws_access_key_id=config['aws']['access_key_id'],
+    aws_secret_access_key=config['aws']['secret_access_key'],
+)
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    'region': 'ap-northeast-2',
+}
+CELERY_RESULT_BACKEND = 'django-db'
+CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
 # AWS
 if USE_STORAGE_S3:
     AWS_ACCESS_KEY_ID = config['aws']['access_key_id']
@@ -110,6 +123,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    'django_celery_beat',
+    'django_celery_results',
 
     'django_extensions',
     'allauth',

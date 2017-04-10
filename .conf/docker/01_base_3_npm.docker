@@ -1,0 +1,5 @@
+WORKDIR     /srv
+RUN         git clone https://github.com/LeeHanYeong/FrontSite.git front
+WORKDIR     /srv/front
+RUN         npm install && \
+            npm run build

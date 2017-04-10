@@ -39,7 +39,9 @@ USAGE = '''Docker build commands
         [default]: Make Dockerfile and Image
         True: Only make Dockerfile
 '''
-MODE_BASE = 'base'
+MODE_BASE_APT = 'base_apt'
+MODE_BASE_PIP = 'base_pip'
+MODE_BASE_NPM = 'base_npm'
 MODE_DEBUG = 'debug'
 MODE_PRODUCTION = 'production'
 MODE_DOCKERHUB = 'dockerhub'
@@ -157,37 +159,58 @@ common_format_dict = {
     'github_password': config_secret_common['github']['password'],
 }
 dockerfile_template = open(os.path.join(CONF_DOCKER_DIR, '00_template.docker'), 'rt').read()
-dockerfile_base = open(os.path.join(CONF_DOCKER_DIR, '01_base.docker'), 'rt').read().format(
-    **common_format_dict)
-dockerfile_common = open(os.path.join(CONF_DOCKER_DIR, '02_common.docker'), 'rt').read().format(
-    **common_format_dict)
+dockerfile_base_apt = open(os.path.join(CONF_DOCKER_DIR, '01_base_1_apt.docker'), 'rt').read().format(**common_format_dict)
+dockerfile_base_pip = open(os.path.join(CONF_DOCKER_DIR, '01_base_2_pip.docker'), 'rt').read().format(**common_format_dict)
+dockerfile_base_npm = open(os.path.join(CONF_DOCKER_DIR, '01_base_3_npm.docker'), 'rt').read().format(**common_format_dict)
+dockerfile_common = open(os.path.join(CONF_DOCKER_DIR, '02_common.docker'), 'rt').read().format(**common_format_dict)
 dockerfile_extra_debug = open(os.path.join(CONF_DOCKER_DIR, '03_extra_debug.docker'), 'rt').read()
 dockerfile_extra_production = open(os.path.join(CONF_DOCKER_DIR, '04_extra_production.docker'),
                                    'rt').read()
 format_dict = {
-    'from': config['rootImageName'],
+    'from': config['imageNameRoot'],
     'maintainer': config_secret_common['docker']['maintainer'],
-    'base': dockerfile_base,
+    'base_apt': dockerfile_base_apt,
+    'base_pip': dockerfile_base_pip,
+    'base_npm': dockerfile_base_npm,
     'common': dockerfile_common,
     'extra': '',
 }
-if args.mode == MODE_BASE:
-    dockerfile_name = config['dockerfileBaseName']
+if args.mode == MODE_BASE_APT:
+    dockerfile_name = config['dockerfileBaseNameApt']
+    format_dict['base_pip'] = ''
+    format_dict['base_npm'] = ''
+    format_dict['common'] = ''
+elif args.mode == MODE_BASE_PIP:
+    dockerfile_name = config['dockerfileBaseNamePip']
+    format_dict['from'] = config['imageNameBaseApt']
+    format_dict['base_apt'] = ''
+    format_dict['base_npm'] = ''
+    format_dict['common'] = ''
+elif args.mode == MODE_BASE_NPM:
+    dockerfile_name = config['dockerfileBaseNameNpm']
+    format_dict['from'] = config['imageNameBasePip']
+    format_dict['base_apt'] = ''
+    format_dict['base_pip'] = ''
     format_dict['common'] = ''
 elif args.mode == MODE_DEBUG:
     dockerfile_name = config['dockerfileDebugName']
-    format_dict['from'] = config['baseImageName']
-    format_dict['base'] = ''
+    format_dict['from'] = config['imageNameBaseNpm']
+    format_dict['base_apt'] = ''
+    format_dict['base_pip'] = ''
+    format_dict['base_npm'] = ''
     format_dict['extra'] = dockerfile_extra_debug
 elif args.mode == MODE_PRODUCTION:
     dockerfile_name = config['dockerfileProductionName']
-    format_dict['from'] = config['baseImageName']
-    format_dict['base'] = ''
+    format_dict['from'] = config['imageNameBase']
+    format_dict['base_apt'] = ''
+    format_dict['base_pip'] = ''
+    format_dict['base_npm'] = ''
     format_dict['extra'] = dockerfile_extra_production
 else:
     dockerfile_name = config['dockerfileDockerHubName']
-    format_dict['from'] = config['dockerHubImageName']
-    format_dict['base'] = ''
+    format_dict['from'] = config['imageNameDockerHub']
+    format_dict['base_apt'] = ''
+    format_dict['base_pip'] = ''
     format_dict['common'] = dockerfile_common
     format_dict['extra'] = dockerfile_extra_production
 dockerfile = dockerfile_template.format(**format_dict)
@@ -212,12 +235,16 @@ build_command_template = 'docker build . -t {name} -f {dockerfile_name}'
 build_format_dict = {
     'dockerfile_name': dockerfile_name,
 }
-if args.mode == MODE_BASE:
-    build_format_dict['name'] = config['baseImageName']
+if args.mode == MODE_BASE_APT:
+    build_format_dict['name'] = config['imageNameBaseApt']
+elif args.mode == MODE_BASE_PIP:
+    build_format_dict['name'] = config['imageNameBasePip']
+elif args.mode == MODE_BASE_NPM:
+    build_format_dict['name'] = config['imageNameBaseNpm']
 elif args.mode == MODE_DEBUG:
-    build_format_dict['name'] = config['debugImageName']
+    build_format_dict['name'] = config['imageNameDebug']
 elif args.mode == MODE_PRODUCTION:
-    build_format_dict['name'] = config['dockerHubImageName']
+    build_format_dict['name'] = config['imageNameDockerHub']
 else:
     sys.exit('DockerHub mode does not build image')
 build_command = build_command_template.format(**build_format_dict)

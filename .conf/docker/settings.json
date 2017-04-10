@@ -1,11 +1,15 @@
 {
-    "baseImageName": "api-ios-base",
-    "debugImageName": "api-ios-debug",
-    "dockerfileBaseName": "Dockerfile.base",
+    "imageNameBaseApt": "api-ios-base-apt",
+    "imageNameBasePip": "api-ios-base-pip",
+    "imageNameBaseNpm": "api-ios-base-npm",
+    "imageNameDebug": "api-ios-debug",
+    "imageNameProduction": "api-ios",
+    "imageNameRoot": "ubuntu:xenial-20170214",
+    "imageNameDockerHub": "azelf/fc-ios-api-server",
+    "dockerfileBaseNameApt": "Dockerfile.base.1.apt",
+    "dockerfileBaseNamePip": "Dockerfile.base.2.pip",
+    "dockerfileBaseNameNpm": "Dockerfile.base.3.npm",
     "dockerfileDebugName": "Dockerfile.debug",
     "dockerfileProductionName": "Dockerfile.production",
-    "dockerfileDockerHubName": "Dockerfile",
-    "productionImageName": "api-ios",
-    "rootImageName": "ubuntu:16.04",
-    "dockerHubImageName": "azelf/fc-ios-api-server"
+    "dockerfileDockerHubName": "Dockerfile"
 }
