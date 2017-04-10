@@ -188,7 +188,7 @@ else:
     dockerfile_name = config['dockerfileDockerHubName']
     format_dict['from'] = config['dockerHubImageName']
     format_dict['base'] = ''
-    format_dict['common'] = ''
+    format_dict['common'] = dockerfile_common
     format_dict['extra'] = dockerfile_extra_production
 dockerfile = dockerfile_template.format(**format_dict)
 while True:
