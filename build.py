@@ -201,7 +201,7 @@ elif args.mode == MODE_DEBUG:
     format_dict['extra'] = dockerfile_extra_debug
 elif args.mode == MODE_PRODUCTION:
     dockerfile_name = config['dockerfileProductionName']
-    format_dict['from'] = config['imageNameBase']
+    format_dict['from'] = config['imageNameBaseNpm']
     format_dict['base_apt'] = ''
     format_dict['base_pip'] = ''
     format_dict['base_npm'] = ''
@@ -211,6 +211,7 @@ else:
     format_dict['from'] = config['imageNameDockerHub']
     format_dict['base_apt'] = ''
     format_dict['base_pip'] = ''
+    format_dict['base_npm'] = ''
     format_dict['common'] = dockerfile_common
     format_dict['extra'] = dockerfile_extra_production
 dockerfile = dockerfile_template.format(**format_dict)
