@@ -212,7 +212,6 @@ else:
     format_dict['base_apt'] = ''
     format_dict['base_pip'] = ''
     format_dict['base_npm'] = ''
-    format_dict['common'] = dockerfile_common
     format_dict['extra'] = dockerfile_extra_production
 dockerfile = dockerfile_template.format(**format_dict)
 while True:
@@ -245,13 +244,16 @@ elif args.mode == MODE_BASE_NPM:
 elif args.mode == MODE_DEBUG:
     build_format_dict['name'] = config['imageNameDebug']
 elif args.mode == MODE_PRODUCTION:
-    build_format_dict['name'] = config['imageNameProduction']
-elif args.mode == MODE_DOCKERHUB:
     build_format_dict['name'] = config['imageNameDockerHub']
+elif args.mode == MODE_DOCKERHUB:
+    build_format_dict['name'] = config['imageNameProduction']
 else:
     sys.exit('Build mode is not valid')
 build_command = build_command_template.format(**build_format_dict)
 
 print('Build command execute: {}'.format(build_command))
 subprocess.run(build_command, shell=True)
-sys.exit('Dockerfile, DockerImage created')
+sys.exit('Dockerfile, DockerImage created\n  Dockerfile: {}\n  DockerImage: {}'.format(
+    dockerfile_name,
+    build_format_dict['name']
+))
