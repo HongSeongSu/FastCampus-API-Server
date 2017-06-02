@@ -7,6 +7,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     img_cover = models.ImageField(upload_to='post', blank=True)
     content = models.TextField(blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

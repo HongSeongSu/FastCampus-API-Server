@@ -1,4 +1,5 @@
 {
+    "createdImageRootName": "api-ios",
     "imageNameBaseApt": "api-ios-base-apt",
     "imageNameBasePip": "api-ios-base-pip",
     "imageNameBaseNpm": "api-ios-base-npm",

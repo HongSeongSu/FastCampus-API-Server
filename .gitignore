@@ -1,8 +1,11 @@
 # Custom
 front/
 Dockerfile.*
+!Dockerfile.aws.json
 .idea/
 .conf-secret/*
+.conf_secret/*
+!.conf_secret/.gitkeep
 !.conf-secret/.gitkeep
 _Dockerfile*
 static_root/
@@ -142,6 +145,7 @@ target/
 
 # pyenv
 .python-version
+.env
 
 # celery beat schedule file
 celerybeat-schedule

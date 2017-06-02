@@ -28,7 +28,8 @@ class PostSerializer(serializers.ModelSerializer):
             'images',
             'title',
             'img_cover',
-            'content'
+            'content',
+            'created_date',
         )
         read_only_fields = ('author', )
 
