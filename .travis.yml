@@ -1,21 +1,16 @@
 language: python
-
 services:
-  - postgresql
-
+- postgresql
 python:
-  - 3.5
-
+- 3.5
 before_install:
-  - openssl aes-256-cbc -K $encrypted_04e0b61f42fd_key -iv $encrypted_04e0b61f42fd_iv -in secrets.tar.enc -out secrets.tar -d
-  - tar xvf secrets.tar
-
+- openssl aes-256-cbc -K $encrypted_e8f21bb90345_key -iv $encrypted_e8f21bb90345_iv
+  -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
 install:
-  - pip install -r requirements.txt
-
+- pip install -r requirements.txt
 before_script:
-  - psql -c "CREATE DATABASE travisci;" -U postgres
-
+- psql -c "CREATE DATABASE travisci;" -U postgres
 script:
-  - python django_app/manage.py migrate --noinput
-  - MODE='DEBUG' django_app/manage.py test
+- python django_app/manage.py migrate --noinput
+- MODE='DEBUG' django_app/manage.py test
