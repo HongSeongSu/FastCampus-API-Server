@@ -1,8 +1,5 @@
-FROM        azelf/fc-ios-api-server
+FROM        azelf/api-ios
 MAINTAINER  dev@azelf.com
-
-
-
 
 COPY        . /srv/app
 COPY        .conf/uwsgi-app.ini /etc/uwsgi/sites/api-ios.ini
