@@ -50,16 +50,16 @@ STATICFILES_DIRS = [
 ]
 
 # Celery
-CELERY_BROKER_TRANSPORT = 'sqs'
-CELERY_BROKER_URL = 'sqs://{aws_access_key_id}:{aws_secret_access_key}@'.format(
-    aws_access_key_id=config['aws']['access_key_id'],
-    aws_secret_access_key=config['aws']['secret_access_key'],
-)
-CELERY_BROKER_TRANSPORT_OPTIONS = {
-    'region': 'ap-northeast-2',
-}
-CELERY_RESULT_BACKEND = 'django-db'
-CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+# CELERY_BROKER_TRANSPORT = 'sqs'
+# CELERY_BROKER_URL = 'sqs://{aws_access_key_id}:{aws_secret_access_key}@'.format(
+#     aws_access_key_id=config['aws']['access_key_id'],
+#     aws_secret_access_key=config['aws']['secret_access_key'],
+# )
+# CELERY_BROKER_TRANSPORT_OPTIONS = {
+#     'region': 'ap-northeast-2',
+# }
+# CELERY_RESULT_BACKEND = 'django-db'
+# CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 # AWS

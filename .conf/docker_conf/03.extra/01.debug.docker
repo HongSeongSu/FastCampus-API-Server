@@ -1,3 +1,4 @@
+COPY        . /srv/app
 COPY        .conf/supervisord-debug.conf /etc/supervisor/supervisord.conf
 COPY        .conf/supervisor-app-debug.conf /etc/supervisor/conf.d/supervisor-app.conf
 COPY        .conf/uwsgi-app-debug.ini /etc/uwsgi/sites/api-ios.ini
