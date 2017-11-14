@@ -9,7 +9,7 @@ from utils.rest.pagination import Pagination10
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all()[:20]
     serializer_class = PostSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # pagination_class = Pagination10

@@ -2,6 +2,7 @@
 
 > 굵은 글씨로 표시된 `Key`는 필수값  
 > 사용자 인증은 Token Authorization을 사용하며, Header의 `Authorization`key에 `Token [Token key value]`value를 추가하여 이용한다.
+> ex) Token 3dfsdbjkdjfkef
 
 ## Repository
 
@@ -9,7 +10,7 @@
 
 ## API Base
 
-`https://fc-ios.lhy.kr/api`
+`http://api-ios-dev.ap-northeast-2.elasticbeanstalk.com/api`
 
 ## API 목록
 
@@ -348,11 +349,7 @@ None
 - Content
 
 ```json
-{
-  "count": 22,
-  "next": "http://127.0.0.1:8000/api/post/?page=2",
-  "previous": null,
-  "results": [
+[
     {
       "pk": 23,
       "author": {
@@ -379,8 +376,7 @@ None
       "img_cover": null,
       "content": "asdf"
     },
-  ]
-}
+]
 ```
 
 ### Error Response
