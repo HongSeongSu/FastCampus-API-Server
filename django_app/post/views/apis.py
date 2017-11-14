@@ -12,6 +12,6 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    pagination_class = Pagination10
+    # pagination_class = Pagination10
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filter_class = PostFilter
