@@ -16,9 +16,8 @@
 
 - Member
 	- [Signup](#signup)
-	- [Login](#login)
-	- [Logout](#logout)
-	- [UserDetail](#user-detail)
+	- [AuthToken](#auth-token)
+	- [Profile](#profile)
 - Post
 	- [Post Create](#post-create)
 	- [Post List](#post-list)
@@ -44,8 +43,7 @@ None
 Key|Description|Type
 ---|---|---
 **username**|회원가입하는 사용자명|String
-**password1**|패스워드|String
-**password2**|패스워드 확인|String
+**password**|패스워드|String
 first_name|이름|String
 last_name|성|String
 email|이메일|String
@@ -55,11 +53,18 @@ email|이메일|String
 - Code: 201
 - Content
 
-Token key value
+Token key value, User object
 
 ```json
 {
-  "key": "4709a4a4174835ac846294f06f6486be9c02b20b"
+    "user": {
+        "pk": 1,
+        "username": "lhy",
+        "first_name": "",
+        "last_name": "",
+        "email": "dev@lhy.kr"
+    },
+    "token": "d3e60437ef417c427f43ac6c09e93b8f86d13356"
 }
 ```
 
@@ -68,43 +73,22 @@ Token key value
 - Code: 400
 	- Reason
 		- 필수항목 누락
-		- username 중복
-		- password 불일치
 	- Content
 
 ```json
 {
-  "username": [
-    "해당 사용자 이름은 이미 존재합니다."
-  ]
+    "password": [
+        "이 필드는 필수 항목입니다."
+    ]
 }
 ```
 
-```json
-{
-  "non_field_errors": [
-    "비밀번호가 일치하지 않습니다."
-  ]
-}
-```
-
-```json
-{
-  "last_name": [
-    "이 항목을 채워주십시오."
-  ],
-  "password2": [
-    "이 항목을 채워주십시오."
-  ]
-}
-```
-
-<a name="login"></a>
+<a name="auth-token"></a>
 ## Login
 
 ### URL
 
-`/members/login/`
+`/members/auth-token/`
 
 ### Method
 
@@ -126,80 +110,47 @@ None
 - Code: 200
 - Content
 
-Token key value
+Token key value, User object
 
 ```json
 {
-  "key": "a35b9eb7e90d9ecdb5567183fb13f6b813cf2547"
+    "user": {
+        "pk": 1,
+        "username": "lhy",
+        "first_name": "",
+        "last_name": "",
+        "email": "dev@lhy.kr"
+    },
+    "token": "d3e60437ef417c427f43ac6c09e93b8f86d13356"
 }
 ```
 
 ### Error Response
 
 - Code: 400
-	- Reason: 인증 실패
+	- Reason
+	    - 필수항목 누락
+	    - 인증실패
 	- Content
 
 ```json
 {
-  "non_field_errors": [
-    "제공된 인증데이터(credentials)로는 로그인할 수 없습니다."
-  ]
+    "password": [
+        "이 필드는 필수 항목입니다."
+    ]
 }
 ```
-
-<a name="logout"></a>
-## Logout
-
-> Authenticate required
-
-### URL
-
-`/members/logout/`
-
-### Method
-
-`POST`
-
-### Header
-
-Key|Value
----|---
-Authorization|Token [Token key value]
-
-### URL Params
-
-None
-
-### Data Params
-
-None
-
-### Success Response
-
-- Code: 200
-- Content
 
 ```json
 {
-  "detail": "Successfully logged out."
+    "non_field_errors": [
+        "제공된 인증데이터(credentials)로는 로그인할 수 없습니다."
+    ]
 }
 ```
 
-### Error Response
-
-- Code: 401
-	- Reason: Invalid token
-	- Content
-
-```json
-{
-  "detail": "토큰이 유효하지 않습니다."
-}
-```
-
-<a name="user-detail"></a>
-## UserDetail(Profile)
+<a name="profile"></a>
+## Profile
 
 > Authenticate required
 
@@ -230,11 +181,15 @@ None
 - Code: 200
 - Content
 
-Token key value
+User object
 
 ```json
 {
-  "key": "a35b9eb7e90d9ecdb5567183fb13f6b813cf2547"
+    "pk": 1,
+    "username": "lhy",
+    "first_name": "",
+    "last_name": "",
+    "email": "dev@lhy.kr"
 }
 ```
 
@@ -250,7 +205,7 @@ Token key value
 }
 ```
 
-
+---
 
 <a name="post-create"></a>
 ## Post Create
@@ -288,20 +243,25 @@ img_cover|이미지
 - Code: 201
 - Content
 
+Post object
+
 ```json
 {
-  "pk": 23,
-  "author": {
-    "pk": 78,
-    "username": "lhy18",
-    "first_name": "HanYeong",
-    "last_name": "Lee",
-    "email": ""
-  },
-  "title": "Post with Image",
-  "img_cover": "http://127.0.0.1:8000/media/posts/120_qaXrLMD.png",
-  "content": "Post Content"
-}```
+    "pk": 6,
+    "author": {
+        "pk": 1,
+        "username": "lhy",
+        "first_name": "",
+        "last_name": "",
+        "email": "dev@lhy.kr"
+    },
+    "images": [],
+    "title": "Post with Image",
+    "img_cover": "https://api.lhy.kr/media/post/pby76.jpg",
+    "content": "Post Content",
+    "created_date": "2018-03-26T20:06:06.886357+09:00"
+}
+```
 
 ### Error Response
 
@@ -351,31 +311,35 @@ None
 ```json
 [
     {
-      "pk": 23,
-      "author": {
-        "pk": 78,
-        "username": "lhy18",
-        "first_name": "HanYeong",
-        "last_name": "Lee",
-        "email": ""
-      },
-      "title": "Post with Image",
-      "img_cover": "http://127.0.0.1:8000/media/posts/120_qaXrLMD.png",
-      "content": "Post Content"
+        "pk": 8,
+        "author": {
+            "pk": 1,
+            "username": "lhy",
+            "first_name": "",
+            "last_name": "",
+            "email": "dev@lhy.kr"
+        },
+        "images": [],
+        "title": "Post Title",
+        "img_cover": null,
+        "content": "",
+        "created_date": "2018-03-26T20:25:20.075944+09:00"
     },
     {
-      "pk": 22,
-      "author": {
-        "pk": 78,
-        "username": "lhy18",
-        "first_name": "HanYeong",
-        "last_name": "Lee",
-        "email": ""
-      },
-      "title": "Post Title",
-      "img_cover": null,
-      "content": "asdf"
-    },
+        "pk": 6,
+        "author": {
+            "pk": 1,
+            "username": "lhy",
+            "first_name": "",
+            "last_name": "",
+            "email": "dev@lhy.kr"
+        },
+        "images": [],
+        "title": "Post with Image",
+        "img_cover": "https://api.lhy.kr/media/post/pby76.jpg",
+        "content": "Post Content",
+        "created_date": "2018-03-26T20:06:06.886357+09:00"
+    }
 ]
 ```
 
@@ -420,19 +384,23 @@ None
 - Code: 200
 - Content
 
+Post object
+
 ```json
 {
-  "pk": 21,
-  "author": {
-    "pk": 78,
-    "username": "lhy18",
-    "first_name": "HanYeong",
-    "last_name": "Lee",
-    "email": ""
-  },
-  "title": "Post Title",
-  "img_cover": null,
-  "content": ""
+    "pk": 6,
+    "author": {
+        "pk": 1,
+        "username": "lhy",
+        "first_name": "",
+        "last_name": "",
+        "email": "dev@lhy.kr"
+    },
+    "images": [],
+    "title": "Post with Image",
+    "img_cover": "https://api.lhy.kr/media/post/pby76.jpg",
+    "content": "Post Content",
+    "created_date": "2018-03-26T20:06:06.886357+09:00"
 }
 ```
 
