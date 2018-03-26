@@ -1,4 +1,0 @@
-FROM        {from_image}
-MAINTAINER  {maintainer}
-
-{content}

@@ -6,11 +6,11 @@
 
 ## Repository
 
-<https://github.com/LeeHanYeong/FastCampus-iOS-API-Server>
+<https://github.com/LeeHanYeong/FastCampus-API-Server>
 
 ## API Base
 
-`http://api-ios-dev.ap-northeast-2.elasticbeanstalk.com/api`
+`http://api.lhy.kr/`
 
 ## API 목록
 
@@ -29,7 +29,7 @@
 
 ### URL
 
-`/member/signup/`
+`/members/signup/`
 
 ### Method
 
@@ -104,7 +104,7 @@ Token key value
 
 ### URL
 
-`/member/login/`
+`/members/login/`
 
 ### Method
 
@@ -155,7 +155,7 @@ Token key value
 
 ### URL
 
-`/member/logout/`
+`/members/logout/`
 
 ### Method
 
@@ -205,7 +205,7 @@ None
 
 ### URL
 
-`/member/profile/`
+`/members/profile/`
 
 ### Method
 
@@ -259,7 +259,7 @@ Token key value
 
 ### URL
 
-`/post/`
+`/posts/`
 
 ### Method
 
@@ -299,7 +299,7 @@ img_cover|이미지
     "email": ""
   },
   "title": "Post with Image",
-  "img_cover": "http://127.0.0.1:8000/media/post/120_qaXrLMD.png",
+  "img_cover": "http://127.0.0.1:8000/media/posts/120_qaXrLMD.png",
   "content": "Post Content"
 }```
 
@@ -323,7 +323,7 @@ img_cover|이미지
 
 ### URL
 
-`/post/`
+`/posts/`
 
 ### Method
 
@@ -360,7 +360,7 @@ None
         "email": ""
       },
       "title": "Post with Image",
-      "img_cover": "http://127.0.0.1:8000/media/post/120_qaXrLMD.png",
+      "img_cover": "http://127.0.0.1:8000/media/posts/120_qaXrLMD.png",
       "content": "Post Content"
     },
     {
@@ -397,7 +397,7 @@ None
 
 ### URL
 
-`/post/<post_pk>/`
+`/posts/<post_pk>/`
 
 ### Method
 

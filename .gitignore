@@ -1,16 +1,10 @@
 # Custom
 *.DS_Store
-front/
+_Dockerfile*
 Dockerfile.*
 !Dockerfile.aws.json
-.idea/
-.conf-secret/*
-.conf_secret/*
-!.conf_secret/.gitkeep
-!.conf-secret/.gitkeep
-_Dockerfile*
-static_root/
 secrets.tar
+/.secrets
 
 # Created by https://www.gitignore.io/api/python,django,pycharm
 
@@ -26,8 +20,9 @@ media
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+.idea/
 
-# User-specific stuff:
+# User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 

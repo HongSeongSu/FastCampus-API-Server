@@ -1,3 +1,0 @@
-[submodule ".conf_secret"]
-	path = .conf_secret
-	url = ssh://git@bitbucket.org/Arcanelux/fastcampus-ios-api-server-config.git
