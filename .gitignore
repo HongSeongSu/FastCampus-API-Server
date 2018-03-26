@@ -5,6 +5,8 @@ Dockerfile.*
 !Dockerfile.aws.json
 secrets.tar
 /.secrets
+/.media
+/.static
 
 # Created by https://www.gitignore.io/api/python,django,pycharm
 
