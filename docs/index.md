@@ -1,16 +1,25 @@
 # API Documentation
 
 > 굵은 글씨로 표시된 `Key`는 필수값  
-> 사용자 인증은 Token Authorization을 사용하며, Header의 `Authorization`key에 `Token [Token key value]`value를 추가하여 이용한다.
+> 사용자 인증은 Token Authorization을 사용  
+> Header의 `Authorization`key에 `Token [Token key value]`value를 추가하여 이용한다.  
+> 
 > ex) Token 3dfsdbjkdjfkef
+
+## 관련 문서
+
+[DRF - TokenAuthentication](http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication)
+[DRF - BasicAuthentication](http://www.django-rest-framework.org/api-guide/authentication/#basicauthentication)
+
+> `HTTP Basic Auth`방식도 지원합니다. Postman으로 간단히 테스트할 때 사용하세요.
 
 ## Repository
 
 <https://github.com/LeeHanYeong/FastCampus-API-Server>
 
-## API Base
+## API Base URL
 
-`https://api.lhy.kr/`
+**`https://api.lhy.kr/`**
 
 ## API 목록
 
