@@ -10,7 +10,7 @@
 
 ## API Base
 
-`http://api.lhy.kr/`
+`https://api.lhy.kr/`
 
 ## API 목록
 

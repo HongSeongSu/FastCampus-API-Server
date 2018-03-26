@@ -62,4 +62,4 @@ docker run -e MODE=DEBUG -p 8000:4567 app
 
 ## API Documentation
 
-<https://leehanyeong.github.io/FastCampus-iOS-API-Server/>
+<https://leehanyeong.github.io/FastCampus-API-Server/>

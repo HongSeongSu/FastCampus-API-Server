@@ -108,6 +108,9 @@ def set_config(obj, module_name=None, start=True):
 setattr(sys.modules[__name__], 'raven', importlib.import_module('raven'))
 set_config(secrets, module_name=__name__, start=True)
 
+# SSL
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Static
 STATICFILES_DIRS = [
     STATIC_DIR,
