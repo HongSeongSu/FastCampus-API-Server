@@ -101,9 +101,9 @@ Token key value, User object
 
 ### Method
 
-`GET`
+`POST`
 
-### URL Params
+### Data
 
 Key			|	Description					|	Type
 ---			|	---						|	---
